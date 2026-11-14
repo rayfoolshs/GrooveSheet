@@ -1,0 +1,101 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-display: 'Outfit', system-ui, -apple-system, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    --studio-bg: #f4f5f7;
+    --studio-surface: #ffffff;
+    --studio-surface-muted: #f1f5f9;
+    --studio-border: #e2e8f0;
+  }
+
+  html.dark {
+    --studio-bg: #0b0f17;
+    --studio-surface: #0f172a;
+    --studio-surface-muted: #162033;
+    --studio-border: #1e293b;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--studio-bg);
+    color: #0f172a;
+    transition: background-color 120ms ease-out;
+  }
+
+  html.dark body {
+    background-color: var(--studio-bg);
+    color: #f1f5f9;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom subtle scrollbars for notation grid */
+.groove-scroll::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.groove-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.groove-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 4px;
+}
+
+.groove-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.55);
+}
+
+/* Dedicated sheet music print rules */
+@media print {
+  @page {
+    size: portrait;
+    margin: 14mm 12mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .print-sheet-container {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .print-system-block {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

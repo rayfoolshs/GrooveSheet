@@ -1,0 +1,6 @@
+{
+  "name": "GrooveSheet",
+  "description": "Real-time collaborative drum groove editor with notation grid, live PAS percussion staff engraving, General MIDI playback, metronome, groove library, and MIDI export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
