@@ -4,6 +4,9 @@ All notable architectural improvements, fixes, and features implemented in **Gro
 
 ## Studio Enhancements & Corrections
 
+### In-App Documentation
+- **Top-of-App User Manual (`src/components/UserManual.tsx`, `src/data/userManual.ts`)**: Added the complete **Edition 2026.1** reference manual as a slim, collapsed-by-default strip at the very top of the app, with all eight chapters, meter/brush/persona/instrument tables, the bipolar swing figure, keyboard shortcuts, and API reference. Remembers its expanded state in `localStorage`.
+
 ### Audio Timing & General MIDI SoundFonts
 - **Web Audio Lookahead Scheduler**: Replaced jitter-prone `setInterval` audio triggers with a sample-accurate Web Audio `AudioContext.currentTime` lookahead scheduler (`22ms` polling, `100ms` lookahead window) supporting swing micro-timing, 1-bar count-in, and metronome click.
 - **General MIDI SoundFont Engine**: Added cached playback for **FluidR3 GM** (`Standard`, `Room`, `Power`, `Electronic`), **Chaos GM**, and **JC Live GM** drum kits, with seamless fallback to the built-in Web Audio synthesizer when offline.

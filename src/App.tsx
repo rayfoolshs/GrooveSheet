@@ -26,6 +26,7 @@ import { PrintPreviewModal } from './components/PrintPreviewModal';
 import { ShareSessionModal } from './components/ShareSessionModal';
 import { SmartDrummerPanel } from './components/SmartDrummerPanel';
 import { SwingShuffleBar } from './components/SwingShuffleBar';
+import { UserManual } from './components/UserManual';
 import { GROOVE_LIBRARY } from './data/grooveLibrary';
 import { createDefaultMixer } from './data/instruments';
 import { useCollaboration } from './hooks/useCollaboration';
@@ -690,6 +691,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-(--studio-bg) text-slate-900 dark:text-slate-100 transition-colors duration-150">
+      {/* 0. Official User Manual reference strip — very top of the app, collapsed by default */}
+      <UserManual />
+
       {/* 1. Strict 3-Zone Top Bar Contract */}
       <header className="bg-(--studio-surface) border-b border-(--studio-border) px-4 sm:px-6 h-14 flex items-center justify-between gap-8 no-print">
         {/* Zone 1: Single-line Brand Wordmark */}
