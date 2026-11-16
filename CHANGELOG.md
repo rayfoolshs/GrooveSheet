@@ -5,7 +5,7 @@ All notable architectural improvements, fixes, and features implemented in **Gro
 ## Studio Enhancements & Corrections
 
 ### In-App Documentation
-- **Top-of-App User Manual (`src/components/UserManual.tsx`, `src/data/userManual.ts`)**: Added the complete **Edition 2026.1** reference manual as a slim, collapsed-by-default strip at the very top of the app, with all eight chapters, meter/brush/persona/instrument tables, the bipolar swing figure, keyboard shortcuts, and API reference. Remembers its expanded state in `localStorage`.
+- **In-App Handbook (`src/components/ManualModal.tsx`, `src/data/manualPages.ts`)**: Added a **Manual** button in the top header that opens the edition 2026.1 handbook as a paged modal — 12 rendered A4 pages (`public/manual/`), chapter shortcut pills, Previous/Next paging, ←/→, Home/End and Escape keys, neighbour-image preloading, and background scroll lock. Page images are generated from `public/GrooveSheet-User-Manual-A4.pdf`.
 
 ### Audio Timing & General MIDI SoundFonts
 - **Web Audio Lookahead Scheduler**: Replaced jitter-prone `setInterval` audio triggers with a sample-accurate Web Audio `AudioContext.currentTime` lookahead scheduler (`22ms` polling, `100ms` lookahead window) supporting swing micro-timing, 1-bar count-in, and metronome click.

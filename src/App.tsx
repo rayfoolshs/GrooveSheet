@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  BookOpen,
   ChevronDown,
   ChevronUp,
   Download,
@@ -19,6 +20,7 @@ import {
 } from 'lucide-react';
 import { BUILTIN_SOUNDFONT_KITS, drumEngine, SoundFontKitId } from './audio/drumEngine';
 import { GrooveLibraryModal } from './components/GrooveLibraryModal';
+import { ManualModal } from './components/ManualModal';
 import { MidiGuideModal } from './components/MidiGuideModal';
 import { NotationGrid } from './components/NotationGrid';
 import { PercussionStaff, StaffHoverInfo } from './components/PercussionStaff';
@@ -26,7 +28,6 @@ import { PrintPreviewModal } from './components/PrintPreviewModal';
 import { ShareSessionModal } from './components/ShareSessionModal';
 import { SmartDrummerPanel } from './components/SmartDrummerPanel';
 import { SwingShuffleBar } from './components/SwingShuffleBar';
-import { UserManual } from './components/UserManual';
 import { GROOVE_LIBRARY } from './data/grooveLibrary';
 import { createDefaultMixer } from './data/instruments';
 import { useCollaboration } from './hooks/useCollaboration';
@@ -148,6 +149,7 @@ export default function App() {
   const [printOpen, setPrintOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const [guideOpen, setGuideOpen] = useState(false);
+  const [manualOpen, setManualOpen] = useState(false);
 
   // General MIDI SoundFont State
   const [activeSoundFont, setActiveSoundFont] = useState<SoundFontKitId>('fluid-standard');
@@ -367,6 +369,8 @@ export default function App() {
     const onKeyDown = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement | null)?.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      // The handbook modal owns the keyboard while it is open
+      if (manualOpen) return;
 
       if (e.code === 'Space') {
         e.preventDefault();
@@ -382,7 +386,7 @@ export default function App() {
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [togglePlay, handleUndo, handleRedo]);
+  }, [togglePlay, handleUndo, handleRedo, manualOpen]);
 
   // Cell mutation
   const handleSetCell = useCallback(
@@ -691,9 +695,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-(--studio-bg) text-slate-900 dark:text-slate-100 transition-colors duration-150">
-      {/* 0. Official User Manual reference strip — very top of the app, collapsed by default */}
-      <UserManual />
-
       {/* 1. Strict 3-Zone Top Bar Contract */}
       <header className="bg-(--studio-surface) border-b border-(--studio-border) px-4 sm:px-6 h-14 flex items-center justify-between gap-8 no-print">
         {/* Zone 1: Single-line Brand Wordmark */}
@@ -749,8 +750,19 @@ export default function App() {
           </button>
         </nav>
 
-        {/* Zone 3: 1 Primary Action */}
-        <div className="flex items-center shrink-0">
+        {/* Zone 3: Primary Action + Manual */}
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={() => setManualOpen(true)}
+            aria-haspopup="dialog"
+            aria-label="Manual"
+            title="Open the user manual"
+            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors whitespace-nowrap shrink-0"
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Manual</span>
+          </button>
           <button
             type="button"
             onClick={() => setShareOpen(true)}
@@ -1250,6 +1262,8 @@ export default function App() {
       </footer>
 
       {/* Modals */}
+      <ManualModal isOpen={manualOpen} onClose={() => setManualOpen(false)} />
+
       <GrooveLibraryModal
         isOpen={libraryOpen}
         currentGroove={groove}
